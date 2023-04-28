@@ -24,92 +24,97 @@ textarea.classList.add('textarea-input');
 container.appendChild(main);
 main.appendChild(textarea);
 textarea.focus();
-
+ 
+//EN-RU Btn
+const langBtn = {
+    keyRu: [
+        ['ё','1','2','3','4','5','6','7','8','9','0','-','=','Backspace'],
+        ['Tab','й','ц','у','к','е','н','г','ш','щ','з','х','ъ','\\','Del'],
+        ['CapsLk','ф','ы','в','а','п','р','о','л','д','ж','э','Enter'],
+        ['Shift','я','ч','с','м','и','т','ь','б','ю','.','↑','Shift'],
+        ['Ctrl','Alt',' ','Alt','←','↓','→','Ctrl'],
+    ],
+    keyRuShift: [
+        ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace'],
+        ['Tab','Й','Ц','У','К','Е','Н','Г','Ш','Щ','З','Х','Ъ','\\','Del'],,
+        ['CapsLk','Ф','Ы','В','А','П','Р','О','Л','Д','Ж','Э','Enter'],
+        ['Shift','Я','Ч','С','М','И','Т','Ь','Б','Ю','.','↑','Shift'],
+        ['Ctrl','Alt',' ','Alt','←','↓','→','Ctrl'],
+    ],
+    keyEn: [
+        ['`','1','2','3','4','5','6','7','8','9','0','-','='],
+        ['Tab','q','w','e','r','t','y','u','i','o','p','[',']','\\','Del'],
+        ['CapsLk','a','s','d','f','g','h','j','k','l',';','\'','Enter'],
+        ['Shift','z','x','c','v','b','n','m',',','.','/','↑','Shift'],
+        ['Ctrl','Alt',' ','Alt','←','↓','→','Ctrl'],
+    ],
+    keyEnShift: [
+        ['~','!','@','#','$','%','^','&','*','(',')','_','+'],
+        ['Tab','Q','W','E','R','T','Y','U','I','O','P','{','}','|','Del'],
+        ['CapsLk','A','S','D','F','G','H','J','K','L',':','"','Enter'],
+        ['Shift','Z','X','C','V','B','N','M','<','>','?','↑','Shift'],
+        ['Ctrl','Alt',' ','Alt','←','↓','→','Ctrl'],
+    ]
+}
 //Keyboard
-const keyboardHtml = 
-    `<div class="keyboard">
-        <div class="keyboard__line">
-            <div class="keyboard__btn" data-key="">Ё</div>
-            <div class="keyboard__btn" data-key="1">1</div>
-            <div class="keyboard__btn" data-key="2">2</div>
-            <div class="keyboard__btn" data-key="3">3</div>
-            <div class="keyboard__btn" data-key="4">4</div>
-            <div class="keyboard__btn" data-key="5">5</div>
-            <div class="keyboard__btn" data-key="6">6</div>
-            <div class="keyboard__btn" data-key="7">7</div>
-            <div class="keyboard__btn" data-key="8">8</div>
-            <div class="keyboard__btn" data-key="9">9</div>
-            <div class="keyboard__btn" data-key="0">0</div>
-            <div class="keyboard__btn" data-key="-">-</div>
-            <div class="keyboard__btn" data-key="+">+</div>
-            <div class="keyboard__btn keyboard__btn_l" data-key="Backspace">Backspace</div>
-        </div>
-        <div class="keyboard__line">
-            <div class="keyboard__btn keyboard__btn_m" data-key="Tab">Tab</div>
-            <div class="keyboard__btn" data-key="й">Й</div>
-            <div class="keyboard__btn" data-key="ц">Ц</div>
-            <div class="keyboard__btn" data-key="у">У</div>
-            <div class="keyboard__btn" data-key="к">К</div>
-            <div class="keyboard__btn" data-key="е">Е</div>
-            <div class="keyboard__btn" data-key="н">Н</div>
-            <div class="keyboard__btn" data-key="г">Г</div>
-            <div class="keyboard__btn" data-key="ш">Ш</div>
-            <div class="keyboard__btn" data-key="щ">Щ</div>
-            <div class="keyboard__btn" data-key="з">З</div>
-            <div class="keyboard__btn" data-key="х">Х</div>
-            <div class="keyboard__btn" data-key="ъ">Ъ</div>
-            <div class="keyboard__btn" data-key="\\">\\</div>
-            <div class="keyboard__btn" data-key="\\">Del</div>
-        </div>
-        <div class="keyboard__line">
-            <div class="keyboard__btn keyboard__btn_l" data-key="CapsLock">CapsLock</div>
-            <div class="keyboard__btn" data-key="ф">Ф</div>
-            <div class="keyboard__btn" data-key="ы">Ы</div>
-            <div class="keyboard__btn" data-key="в">В</div>
-            <div class="keyboard__btn" data-key="а">А</div>
-            <div class="keyboard__btn" data-key="п">П</div>
-            <div class="keyboard__btn" data-key="р">Р</div>
-            <div class="keyboard__btn" data-key="о">О</div>
-            <div class="keyboard__btn" data-key="л">Л</div>
-            <div class="keyboard__btn" data-key="д">Д</div>
-            <div class="keyboard__btn" data-key="ж">Ж</div>
-            <div class="keyboard__btn" data-key="э">Э</div>
-            <div class="keyboard__btn keyboard__btn_l" data-key="">Enter</div>
-        </div>
-        <div class="keyboard__line">
-            <div class="keyboard__btn keyboard__btn_l" data-key="Shift">Shift</div>
-            <div class="keyboard__btn" data-key="я">Я</div>
-            <div class="keyboard__btn" data-key="ч">Ч</div>
-            <div class="keyboard__btn" data-key="с">С</div>
-            <div class="keyboard__btn" data-key="м">М</div>
-            <div class="keyboard__btn" data-key="и">И</div>
-            <div class="keyboard__btn" data-key="т">Т</div>
-            <div class="keyboard__btn" data-key="ь">Ь</div>
-            <div class="keyboard__btn" data-key="б">Б</div>
-            <div class="keyboard__btn" data-key="ю">Ю</div>
-            <div class="keyboard__btn" data-key=".">.</div>
-            <div class="keyboard__btn" data-key=""><span class="material-symbols-outlined">
-            arrow_upward
-            </span></div>
-            <div class="keyboard__btn keyboard__btn_l" data-key="Shift">Shift</div>
-        </div>
-        <div class="keyboard__line keyboard__line_short">
-            <div class="keyboard__btn" data-key="Ctrl">Ctrl</div>
-            <div class="keyboard__btn" data-key="Alt">Alt</div>
-            <div class="keyboard__btn keyboard__btn_xl" data-key=" "></div>
-            <div class="keyboard__btn" data-key="Alt">Alt</div>
-            <div class="keyboard__btn" data-key="Ctrl">Ctrl</div>
-            <div class="keyboard__btn" data-key=""><span class="material-symbols-outlined">
-            arrow_back
-            </span></div>
-            <div class="keyboard__btn" data-key=""><span class="material-symbols-outlined">
-            arrow_downward
-            </span></div>
-            <div class="keyboard__btn" data-key=""><span class="material-symbols-outlined">
-            arrow_right_alt
-            </span></div>
-        </div>
-    </div>`
-main.insertAdjacentHTML('beforeend', keyboardHtml);
+function createKeyboard(langBtn,) {
+    let keyboardHtml = '<div class="keyboard">';
+    const rows = langBtn.keyRu.length;
+    for (let i = 0; i < rows; i++) {
+        keyboardHtml += '<div class="keyboard__line">';
+        let keys = langBtn.keyRu[i];
+        for (let j = 0; j < keys.length; j++) {
+            if (keys[j] === 'Backspace' || keys[j] === 'Enter' || keys[j] === 'Shift'|| keys[j] === 'CapsLk') {
+                keyboardHtml += '<div class="keyboard__btn keyboard__btn_l" data-key="' + keys[j] + '">' + keys[j] + '</div>';
+            }else if (keys[j] === 'Tab') {
+                keyboardHtml += '<div class="keyboard__btn keyboard__btn_m" data-key="' + keys[j] + '">' + keys[j] + '</div>';
+            }else if (keys[j] === ' ') {
+                keyboardHtml += '<div class="keyboard__btn keyboard__btn_xl" data-key="' + keys[j] + '">' + keys[j] + '</div>';;
+            }else {
+                keyboardHtml += '<div class="keyboard__btn" data-key="' + keys[j] + '">' + keys[j] + '</div>';
 
+            }
+        }
+        keyboardHtml += '</div>';
+    }
+    keyboardHtml += '</div>';
+    main.insertAdjacentHTML('beforeend', keyboardHtml);
+}
+createKeyboard(langBtn)
+init()
+function init() {
 
+    textarea.focus();
+    
+    textarea.addEventListener('keydown', function(e) {
+        console.log(e.key)
+        const element = document.querySelector('[data-key="' + e.key + '"]');
+
+        if(element) {
+            element.classList.add('hint');
+        }})
+    
+        const currentLetter = getCurrentLetter()
+    /*    
+        if(e.key === currentLetter.label) {
+            letterId = letterId + 1;
+            update()
+        }else {
+            e.preventDefault();
+        }
+        if(currentLineNumber !== getCurrentLineNumber()) {
+            inputElement.value = '';
+            e.preventDefault();
+        }
+    })
+    
+    textarea.addEventListener('keyup', function(e) {
+        const element = document.querySelector('[data-key="' + e.key + '"]');
+        element.classList.remove('hint');
+    })
+*/
+}
+
+function getCurrentLetter() {
+
+}

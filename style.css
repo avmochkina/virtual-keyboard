@@ -67,7 +67,7 @@ body {
     line-height: 42px;
     font-size: 16px;
     border-radius: 6px;
-    border: none;
+    border: 1px solid black;
     color: #ffffff;
     background-color: black;
     display: flex;
@@ -77,11 +77,34 @@ body {
     padding: 4px;
 }
 
+.keyboard__btn:active {
+    background-color: #d9d9d9;
+    color: black;
+    border: 1px solid black;
+}
+
 .keyboard__btn_xl {
-    grid-column: span 6;
+    grid-column: span 8;
 }
 
 .keyboard__btn_l {
     grid-column: span 2;
 }
 
+@media screen and (max-width: 600px) {
+    .keyboard__line {
+      grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+    }
+}
+  
+@media screen and (min-width: 601px) and (max-width: 900px) {
+    .keyboard__line {
+      grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    }
+}
+  
+@media screen and (min-width: 901px) {
+    .keyboard__line {
+      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    }
+}
