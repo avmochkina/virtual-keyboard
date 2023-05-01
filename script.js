@@ -1,5 +1,10 @@
 class Keyboard {
     constructor() {
+        this.EngLang = true;
+        this.Shift;
+        this.ControlPressed = false;
+        this.AltPressed = false;
+        this.CapsLockPressed = false;     
         this.container = document.createElement('div');
         this.container.classList.add('container');
         const script = document.querySelector('script');
@@ -8,7 +13,7 @@ class Keyboard {
         this.createTextarea();
         this.createKeyboard();
         this.init();
-        this.textarea()
+
     }
 
     createHeader() {
@@ -70,12 +75,12 @@ class Keyboard {
         main.insertAdjacentHTML('beforeend', keyboardHtml);
     }
     
-    keyboardLang(isEngLang, isShift) {
+    keyboardLang(EngLang, Shift) {
         const storedLang = localStorage.getItem('lang');
         if (storedLang && storedLang === 'ru') {
-            isEngLang = false;
+            EngLang = false;
         }else {
-            isEngLang = true; 
+            EngLang = true; 
         }
         const keysLang = {
             keyRu: [
@@ -109,61 +114,149 @@ class Keyboard {
         };
       
         const btns = document.querySelectorAll('.keyboard__btn');
-        const language = isEngLang ? 'keyEn' : 'keyRu';
-        const keys = isShift ? keysLang[`${language}Shift`] : keysLang[language];
+        const language = EngLang ? 'keyEn' : 'keyRu';
+        const keys = Shift ? keysLang[`${language}Shift`] : keysLang[language];
         for (let i = 0; i < keys.length; i++) {
             btns[i].textContent = keys[i];  
         }
     }
 
+    handleKeyActions(e) {
+        let textarea = document.querySelector("textarea");   
+        let virtualKey = document.querySelector(`[data-code="${e.code}"]`);
+        let mouseKey = e.target;
+        let letter;
+
+        if (virtualKey) {
+            e.preventDefault()
+            letter = virtualKey.textContent;
+            virtualKey.classList.add("active");
+            if (e.code === "ShiftLeft" || e.code === "ShiftRight") {
+                this.Shift = true;
+                textarea.value += '';
+            }else if (e.code === "Tab") {
+                textarea.value += '\t';
+            }else if (e.code === "CapsLock" && this.CapsLockPressed) {
+                this.CapsLockPressed = false;
+                textarea.value += '';
+            }else if (e.code === "CapsLock") {
+                this.CapsLockPressed = true;
+                textarea.value += '';
+    
+            }else if (e.code === "Backspace") {
+                textarea.value = textarea.value.slice(0, -1);
+            } else if (e.code === "Enter") {
+                textarea.value += "\n";
+            } else if (e.code === "ArrowLeft") {
+                textarea.selectionStart = Math.max(textarea.selectionStart - 1, 0);
+                textarea.selectionEnd = Math.max(textarea.selectionEnd - 1, 0);
+            } else if (e.code === "ArrowRight") {
+                textarea.selectionStart = Math.min(textarea.selectionStart + 1, textarea.value.length);
+                textarea.selectionEnd = Math.min(textarea.selectionEnd + 1, textarea.value.length);
+            }else if (e.code === 'ArrowUp') {
+                textarea.selectionStart = 0;
+                textarea.selectionEnd = 0;
+            } else if (e.code === 'ArrowDown') {
+                textarea.selectionStart = textarea.value.length;
+                textarea.selectionEnd = textarea.value.length;
+            }else if (e.code === 'ControlLeft' || e.code === 'AltLeft' || e.code === 'AltRight' || e.code === 'ControlRight') {
+                textarea.value += '';
+            } else {
+                textarea.value += letter;
+            }
+        }else if(mouseKey.classList.contains("keyboard__btn")) {
+            letter = mouseKey.textContent;
+            mouseKey.classList.add("active");
+            console.log(e.target)
+            if (letter === "Shift") {
+                this.Shift = true;
+                textarea.value += '';
+            }else if (letter === "Tab") {
+                textarea.value += '\t';
+            }else if (letter === "CapsLock" && this.CapsLockPressed) {
+                this.CapsLockPressed = false;
+                textarea.value += '';
+            }else if (letter === "CapsLk") {
+                this.CapsLockPressed = true;
+                textarea.value += '';
+    
+            }else if (letter === "Backspace") {
+                textarea.value = textarea.value.slice(0, -1);
+            } else if (letter === "Enter") {
+                textarea.value += "\n";
+            } else if (letter === "←") {
+                textarea.selectionStart = Math.max(textarea.selectionStart - 1, 0);
+                textarea.selectionEnd = Math.max(textarea.selectionEnd - 1, 0);
+            } else if (letter === "→") {
+                textarea.selectionStart = Math.min(textarea.selectionStart + 1, textarea.value.length);
+                textarea.selectionEnd = Math.min(textarea.selectionEnd + 1, textarea.value.length);
+            }else if (letter === '↑') {
+                textarea.selectionStart = 0;
+                textarea.selectionEnd = 0;
+            } else if (letter === '↓') {
+                textarea.selectionStart = textarea.value.length;
+                textarea.selectionEnd = textarea.value.length;
+            }else if (letter === 'Ctrl' || letter === 'Alt') {
+                textarea.value += '';
+            } else {
+                textarea.value += letter;
+            }
+            textarea.focus(); 
+        }
+    }
+
     init() {
-        let isEngLang = true;
-        let isShift;
-        let isControlPressed = false;
-        let isAltPressed = false;
         
         // Keydown event listener
         window.addEventListener("keydown", (e) => {
-          let virtualKey = document.querySelector(`[data-code="${e.code}"]`);
-      
-          if (virtualKey) {
-            virtualKey.classList.add("active");
-      
-            if (e.code === 'AltLeft' || e.code === 'Tab' || e.code === 'AltRight') {
-              e.preventDefault();  
-            } else if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-              isShift = true;
-            }
-            this.keyboardLang(isEngLang, isShift); 
-        }
+
+            this.handleKeyActions(e);                  
+            this.keyboardLang(this.EngLang, this.Shift);
+              
         });
         
         // Keyup event listener
         window.addEventListener("keyup", (e) => {
-          const virtualKey = document.querySelector(`[data-code="${e.code}"]`);
-          
-          if (virtualKey) {
-            virtualKey.classList.remove("active");
+            const virtualKey = document.querySelector(`[data-code="${e.code}"]`);
             
+            
+            if (virtualKey) {
+                virtualKey.classList.remove("active");
+                
             if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-              isShift = false;
+               this.Shift = false;
             } else if (e.code === 'ControlLeft') {
-              isControlPressed = true;
+                this.ControlPressed = true;
             } else if (e.code === 'AltLeft') {
-              isAltPressed = true;
+                this.AltPressed = true;
             }
             
-            if (isControlPressed && isAltPressed) {
-                isEngLang = !isEngLang;
-                localStorage.setItem('lang', isEngLang ? 'en' : 'ru');
-                isControlPressed = false;
-                isAltPressed = false;
+            if (this.ControlPressed && this.AltPressed) {
+                this.EngLang = !this.EngLang;
+                localStorage.setItem('lang', this.EngLang ? 'en' : 'ru');
+                this.ControlPressed = false;
+                this.AltPressed = false;
             }
-            this.keyboardLang(isEngLang, isShift);
-          }
-          
+            this.keyboardLang(this.EngLang, this.Shift);
+        }
         });
-        this.keyboardLang(isEngLang, isShift);
+
+        window.addEventListener("mousedown", (e) => {
+            
+                this.handleKeyActions(e);
+                
+
+            
+          });
+      
+          // Mouse release event listener
+          window.addEventListener("mouseup", (e) => {
+            if (e.target.classList.contains("keyboard__btn")) {
+              e.target.classList.remove("active");
+            }
+          });
+
+        this.keyboardLang(this.EngLang, this.Shift);  
     }
 
 
