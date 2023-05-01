@@ -28,7 +28,7 @@ body {
 
 .header__subtitle {
     font-weight: 400;
-    font-size: 28px;
+    font-size: 18px;
     margin: 10px auto;
 }
 
@@ -83,11 +83,11 @@ body {
     border: 1px solid black;
 }
 
-.keyboard__btn_xl {
+.keyboard__btn_extralarge {
     grid-column: span 8;
 }
 
-.keyboard__btn_l {
+.keyboard__btn_large {
     grid-column: span 2;
 }
 
